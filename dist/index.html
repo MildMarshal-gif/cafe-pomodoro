@@ -3,51 +3,111 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#263f49" />
+    <meta name="theme-color" content="#211e29" />
     <meta
       name="description"
-      content="雨の喫茶店で、ひとつずつ。集中するほど新しい席に出会える作業タイマー。"
+      content="雨の喫茶店につながる、小さなデスクトップ。静かな時間を一緒に過ごす作業タイマー。"
     />
-    <title>Cafe Pomodoro — 喫茶室</title>
-    <link rel="icon" href="data:," />
+    <title>Cafe Pomodoro — 喫茶端末</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23c5c4bd' d='M2 3h28v21H2zM13 24h6v4h7v3H6v-3h7z'/%3E%3Cpath fill='%23211e29' d='M5 6h22v15H5z'/%3E%3Cpath fill='%23d9ab9d' d='M10 10h10v2h3v5h-3v2H10zm10 4v2h1v-2z'/%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">タイマーへ</a>
+    <a class="skip-link" href="#main">作業スペースへ</a>
+    <svg
+      class="icon-library"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <symbol id="i-monitor" viewBox="0 0 24 24">
+        <path d="M2 3h20v14H2zM8 21h8M12 17v4M5 6h14v8H5z" />
+      </symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24">
+        <path d="M2 6V3h8l3 3h9v14H2zM2 9h20" />
+      </symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24">
+        <path d="M3 2v19h19M7 17v-5h3v5M13 17V8h3v9M19 17V4h3v13" />
+      </symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24">
+        <path
+          d="M5 2v7m0 6v7M12 2v12m0 6v2M19 2v3m0 6v11M2 9h6v6H2zm7 5h6v6H9zm7-9h6v6h-6z"
+        />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <path d="M7 2h10l5 5v10l-5 5H7l-5-5V7zM12 6v7h5" />
+      </symbol>
+      <symbol id="i-sound" viewBox="0 0 24 24">
+        <path d="M3 9h4l6-5v16l-6-5H3zM17 8v8M21 5v14" />
+      </symbol>
+      <symbol id="i-cup" viewBox="0 0 24 24">
+        <path d="M3 7h14v12H3zM17 8h5v7h-5M1 22h19M7 1v3M12 1v3" />
+      </symbol>
+    </svg>
     <div class="app-shell">
-      <header class="site-header">
-        <a class="brand" href="#" aria-label="Cafe Pomodoro 喫茶室"
-          ><span class="brand-mark" aria-hidden="true">喫</span
-          ><span>Cafe Pomodoro<small>あなたの、いつもの席。</small></span></a
+      <header class="system-bar">
+        <a class="brand" href="#" data-home aria-label="Cafe Pomodoro 喫茶室"
+          ><svg class="ui-icon" aria-hidden="true">
+            <use href="#i-monitor" /></svg
+          ><strong>Cafe Pomodoro</strong></a
         >
-        <nav aria-label="メインメニュー">
-          <button class="nav-button active" data-view="cafe">喫茶室</button
-          ><button class="nav-button" data-view="collection">場面帖</button
-          ><button class="nav-button" data-view="records">記録</button
-          ><button id="settings-open" class="nav-button">設定</button>
-        </nav>
+        <span class="system-caption">雨の日のデスクトップ</span>
+        <span class="system-date" id="today-date"></span>
+        <time id="system-clock" aria-label="現在時刻"></time>
       </header>
+      <nav class="desktop-shortcuts" aria-label="デスクトップ">
+        <button
+          class="desktop-icon nav-button active"
+          data-view="cafe"
+          aria-current="page"
+        >
+          <svg aria-hidden="true"><use href="#i-monitor" /></svg
+          ><span>喫茶室</span>
+        </button>
+        <button class="desktop-icon nav-button" data-view="collection">
+          <svg aria-hidden="true"><use href="#i-folder" /></svg
+          ><span>場面フォルダ</span>
+        </button>
+        <button class="desktop-icon nav-button" data-view="records">
+          <svg aria-hidden="true"><use href="#i-chart" /></svg
+          ><span>集中の記録</span>
+        </button>
+        <button class="desktop-icon" data-settings>
+          <svg aria-hidden="true"><use href="#i-settings" /></svg
+          ><span>環境設定</span>
+        </button>
+      </nav>
       <main id="main" tabindex="-1">
-        <section id="cafe-view">
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">本日の喫茶室</span>
-              <h1>雨音と、もうひと頑張り。</h1>
-            </div>
-            <span class="date-label" id="today-date"></span>
+        <section id="cafe-view" aria-label="喫茶室のデスクトップ">
+          <div class="desktop-heading">
+            <h1>雨の向こうに、いつもの席。</h1>
+            <span>ひとつの画面、ひとつの時間。</span>
           </div>
           <div class="workspace">
-            <section class="scene-panel" aria-label="喫茶店の静止画プレビュー">
-              <div class="panel-bar">
+            <section
+              class="scene-panel os-window"
+              aria-label="喫茶店の静止画プレビュー"
+            >
+              <div class="window-titlebar">
                 <span
-                  ><span class="live-dot"></span
-                  ><span id="scene-name">雨窓の喫茶室</span></span
-                ><span class="preview-tag">静止画プレビュー</span>
+                  ><svg class="ui-icon" aria-hidden="true">
+                    <use href="#i-monitor" /></svg
+                  >喫茶室 — <span id="scene-name">雨窓の喫茶室</span></span
+                ><span class="window-number" aria-hidden="true">01</span>
+              </div>
+              <div class="window-toolbar">
+                <span class="preview-tag">静止画プレビュー</span
+                ><button class="text-button" data-view="collection">
+                  場面を開く…
+                </button>
               </div>
               <div class="scene-viewport" id="scene-viewport">
                 <img
                   id="scene-image"
-                  alt="雨の喫茶店で、クマのパジャマを着た女性が参考書とノートに向かって勉強する"
+                  alt="雨の喫茶店で女性が勉強する静止画"
                   hidden
                 />
                 <div id="image-fallback" class="image-fallback">
@@ -67,103 +127,129 @@
                 </div>
               </div>
               <div class="scene-bottom">
-                <span id="scene-detail">参考書を開いて、ゆっくり始めよう。</span
-                ><button class="text-button" data-view="collection">
-                  席を変える <span aria-hidden="true">↗</span>
-                </button>
+                <span class="status-light" aria-hidden="true"></span
+                ><span id="scene-detail"
+                  >参考書を開いて、ゆっくり始めよう。</span
+                ><span class="image-type">画像</span>
               </div>
             </section>
-            <section class="timer-panel" aria-label="作業タイマー">
-              <div class="timer-top">
-                <span class="eyebrow">ひと区切りの時間</span
+            <section class="timer-panel os-window" aria-label="作業タイマー">
+              <div class="window-titlebar">
+                <span
+                  ><svg class="ui-icon" aria-hidden="true">
+                    <use href="#i-clock" /></svg
+                  >集中タイマー</span
                 ><button
                   id="timer-settings"
-                  class="text-button"
+                  class="title-button"
                   aria-label="時間の設定を開く"
+                  title="時間の設定"
                 >
-                  時間を変更
+                  <svg class="ui-icon" aria-hidden="true">
+                    <use href="#i-settings" />
+                  </svg>
                 </button>
               </div>
-              <div class="mode-tabs" role="group" aria-label="タイマーの種類">
-                <button data-mode="focus" aria-pressed="true">集中</button
-                ><button data-mode="short" aria-pressed="false">休憩</button
-                ><button data-mode="long" aria-pressed="false">長休憩</button>
-              </div>
-              <div class="timer-dial" id="timer-dial">
-                <span class="dial-caption" id="phase-label">集中する時間</span>
-                <div
-                  class="timer-digits"
-                  id="timer-digits"
-                  role="timer"
-                  aria-label="残り25分00秒"
-                >
-                  25<span>:</span>00
+              <div class="timer-body">
+                <div class="mode-tabs" role="group" aria-label="タイマーの種類">
+                  <button data-mode="focus" aria-pressed="true">集中</button
+                  ><button data-mode="short" aria-pressed="false">休憩</button
+                  ><button data-mode="long" aria-pressed="false">長休憩</button>
                 </div>
-                <span class="timer-note" id="timer-note"
-                  >準備ができたら、はじめよう</span
+                <div class="timer-dial" id="timer-dial">
+                  <div class="dial-header">
+                    <span id="phase-label">集中する時間</span
+                    ><span id="timer-status">待機中</span>
+                  </div>
+                  <div
+                    class="timer-digits"
+                    id="timer-digits"
+                    role="timer"
+                    aria-label="残り25分00秒"
+                  >
+                    25<span>:</span>00
+                  </div>
+                  <progress
+                    id="timer-progress"
+                    max="100"
+                    value="0"
+                    aria-label="この区切りの経過"
+                  ></progress
+                  ><span class="timer-note" id="timer-note"
+                    >準備ができたら、はじめよう</span
+                  >
+                </div>
+                <div class="rounds" id="rounds" aria-label="長休憩まであと3回">
+                  <span class="round current"></span><span class="round"></span
+                  ><span class="round"></span><small>3回の集中で長休憩</small>
+                </div>
+                <button id="toggle-timer" class="primary-button">
+                  <span aria-hidden="true">▶</span> 集中をはじめる
+                </button>
+                <button
+                  id="finish-timer"
+                  class="text-button finish-button"
+                  disabled
                 >
-              </div>
-              <div class="rounds" id="rounds" aria-label="長休憩まであと3回">
-                <span class="round current"></span><span class="round"></span
-                ><span class="round"></span><small>3回の集中で長休憩</small>
-              </div>
-              <button id="toggle-timer" class="primary-button">
-                <span aria-hidden="true">▶</span> 集中をはじめる
-              </button>
-              <button
-                id="finish-timer"
-                class="text-button finish-button"
-                disabled
-              >
-                ここまでを記録して終了
-              </button>
-              <div class="next-break" id="next-break">
-                次は 5分の休憩 <span>自動で切り替わります</span>
+                  ここまでを記録して終了
+                </button>
+                <div class="next-break" id="next-break">
+                  次は 5分の休憩 <span>自動で切り替わります</span>
+                </div>
               </div>
             </section>
-          </div>
-          <div class="under-workspace">
-            <section class="sound-panel">
-              <div>
-                <span class="eyebrow">この席の音</span>
-                <p>雨の日のサウンド</p>
+            <section class="sound-panel os-window" aria-label="サウンド">
+              <div class="window-titlebar inactive">
+                <span
+                  ><svg class="ui-icon" aria-hidden="true">
+                    <use href="#i-sound" /></svg
+                  >サウンド</span
+                ><span class="window-number" aria-hidden="true">02</span>
               </div>
-              <div class="sound-controls">
-                <button
-                  id="rain-toggle"
-                  class="sound-chip"
-                  aria-pressed="false"
-                >
-                  <span aria-hidden="true">☂</span> 雨音
-                  <small>OFF</small></button
-                ><button
-                  id="music-toggle"
-                  class="sound-chip"
-                  aria-pressed="false"
-                >
-                  <span aria-hidden="true">♫</span> BGM
-                  <small>OFF</small></button
-                ><label class="volume-label"
-                  >音量<input
-                    id="volume"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="35"
-                    aria-label="音量"
-                /></label>
+              <div class="sound-body">
+                <div class="sound-label">
+                  <span class="sound-meter" aria-hidden="true"
+                    ><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                    ><i></i></span
+                  ><span>雨の日の音</span>
+                </div>
+                <div class="sound-controls">
+                  <button
+                    id="rain-toggle"
+                    class="sound-chip"
+                    aria-pressed="false"
+                  >
+                    雨音 <small>OFF</small></button
+                  ><button
+                    id="music-toggle"
+                    class="sound-chip"
+                    aria-pressed="false"
+                  >
+                    BGM <small>OFF</small></button
+                  ><label class="volume-label"
+                    >音量<input
+                      id="volume"
+                      type="range"
+                      min="0"
+                      max="100"
+                      value="35"
+                      aria-label="音量"
+                  /></label>
+                </div>
               </div>
             </section>
             <section class="today-card">
-              <span class="eyebrow">今日の集中</span
+              <span>今日の集中</span
               ><strong id="today-total">0<small>分</small></strong
               ><button class="text-button" data-view="records">
-                記録を見る ↗
+                記録を開く ↗
               </button>
             </section>
           </div>
-          <section class="journey">
-            <div class="stamp" aria-hidden="true">次の席</div>
+          <section class="journey" aria-label="次の場面までの進み具合">
+            <svg class="ui-icon" aria-hidden="true">
+              <use href="#i-folder" />
+            </svg>
             <div class="journey-copy">
               <h2 id="unlock-heading">次は、雨の建築喫茶へ。</h2>
               <p id="unlock-copy">
@@ -181,49 +267,87 @@
             </div>
           </section>
         </section>
-        <section id="collection-view" hidden>
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">あなたの場面帖</span>
-              <h1>いつもの席も、新しい席も。</h1>
-            </div>
-            <span id="collection-count" class="date-label">2 / 4 席</span>
+        <section
+          id="collection-view"
+          class="application-window os-window"
+          aria-labelledby="collection-heading"
+          hidden
+        >
+          <div class="window-titlebar">
+            <span
+              ><svg class="ui-icon" aria-hidden="true">
+                <use href="#i-folder" /></svg
+              >場面フォルダ</span
+            ><button
+              class="title-button"
+              data-view="cafe"
+              aria-label="場面フォルダを閉じて喫茶室へ"
+            >
+              ×
+            </button>
           </div>
-          <p class="view-intro">
-            集中した時間が、次の喫茶店への切符になります。
-          </p>
-          <div id="scene-grid" class="scene-grid"></div>
+          <div class="folder-path">
+            <span>喫茶端末</span><span aria-hidden="true">›</span
+            ><strong>場面フォルダ</strong
+            ><span id="collection-count">2 / 4 席</span>
+          </div>
+          <div class="window-content">
+            <div class="section-heading">
+              <h1 id="collection-heading">今日は、どの席にする？</h1>
+              <p>集中した時間に合わせて、新しい場面が開きます。</p>
+            </div>
+            <div id="scene-grid" class="scene-grid"></div>
+          </div>
         </section>
-        <section id="records-view" hidden>
-          <div class="section-heading">
-            <div>
-              <span class="eyebrow">積み重ねた時間</span>
-              <h1>少しずつが、ちゃんと残る。</h1>
+        <section
+          id="records-view"
+          class="application-window os-window"
+          aria-labelledby="records-heading"
+          hidden
+        >
+          <div class="window-titlebar">
+            <span
+              ><svg class="ui-icon" aria-hidden="true">
+                <use href="#i-chart" /></svg
+              >集中の記録</span
+            ><button
+              class="title-button"
+              data-view="cafe"
+              aria-label="記録を閉じて喫茶室へ"
+            >
+              ×
+            </button>
+          </div>
+          <div class="window-content">
+            <div class="section-heading">
+              <h1 id="records-heading">ここに残る、あなたの時間。</h1>
+              <p>少しずつ積み重ねた集中の記録。</p>
             </div>
-          </div>
-          <div class="record-summary" id="record-summary"></div>
-          <div class="records-grid">
-            <section class="record-panel">
-              <h2>この7日間</h2>
-              <div id="bar-chart" class="bar-chart"></div>
+            <div class="record-summary" id="record-summary"></div>
+            <div class="records-grid">
+              <section class="record-panel">
+                <h2>この7日間</h2>
+                <div id="bar-chart" class="bar-chart"></div>
+              </section>
+              <section class="record-panel">
+                <h2>集中のカレンダー <small>直近12週間</small></h2>
+                <div
+                  id="heatmap"
+                  class="heatmap"
+                  aria-label="日別の集中時間"
+                ></div>
+                <div class="heat-legend">
+                  <span>少ない</span><i></i><i></i><i></i><i></i
+                  ><span>多い</span>
+                </div>
+              </section>
+            </div>
+            <section class="record-panel badges-panel">
+              <h2>通う楽しみ</h2>
+              <p id="streak-copy"></p>
+              <div id="badges" class="badges"></div>
             </section>
-            <section class="record-panel">
-              <h2>集中のカレンダー <small>直近12週間</small></h2>
-              <div
-                id="heatmap"
-                class="heatmap"
-                aria-label="日別の集中時間"
-              ></div>
-              <div class="heat-legend">
-                <span>少ない</span><i></i><i></i><i></i><i></i><span>多い</span>
-              </div>
-            </section>
           </div>
-          <section class="record-panel badges-panel">
-            <h2>通う楽しみ</h2>
-            <p id="streak-copy"></p>
-            <div id="badges" class="badges"></div>
-          </section>
         </section>
       </main>
       <footer>
@@ -237,11 +361,31 @@
           >ソースを見る ↗</a
         ><button id="feedback-open" class="text-button">感想・不具合</button>
       </footer>
+      <nav class="taskbar" aria-label="メインメニュー">
+        <span class="start-mark" aria-hidden="true"
+          ><svg class="ui-icon"><use href="#i-cup" /></svg>喫茶端末</span
+        ><button class="nav-button active" data-view="cafe" aria-current="page">
+          <svg class="ui-icon" aria-hidden="true"><use href="#i-monitor" /></svg
+          >喫茶室</button
+        ><button class="nav-button" data-view="collection">
+          <svg class="ui-icon" aria-hidden="true"><use href="#i-folder" /></svg
+          >場面</button
+        ><button class="nav-button" data-view="records">
+          <svg class="ui-icon" aria-hidden="true"><use href="#i-chart" /></svg
+          >記録</button
+        ><button id="settings-open" class="nav-button">
+          <svg class="ui-icon" aria-hidden="true">
+            <use href="#i-settings" /></svg
+          >設定</button
+        ><span id="taskbar-timer" class="taskbar-status"
+          >集中 25:00 · 待機中</span
+        >
+      </nav>
     </div>
-    <dialog id="settings-dialog">
+    <dialog id="settings-dialog" aria-labelledby="settings-heading">
       <form id="settings-form">
         <div class="dialog-heading">
-          <h2>この席の設定</h2>
+          <h2 id="settings-heading">環境設定</h2>
           <button
             type="button"
             data-close="settings-dialog"
@@ -322,9 +466,9 @@
         <button type="submit" class="primary-button">設定を保存</button>
       </form>
     </dialog>
-    <dialog id="feedback-dialog">
+    <dialog id="feedback-dialog" aria-labelledby="feedback-heading">
       <div class="dialog-heading">
-        <h2>感想・不具合メモ</h2>
+        <h2 id="feedback-heading">感想・不具合メモ</h2>
         <button
           data-close="feedback-dialog"
           class="icon-button"

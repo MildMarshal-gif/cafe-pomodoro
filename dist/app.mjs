@@ -104,7 +104,7 @@ async function transact(action) {
     render();
     handleEvents(events);
     if (unlockedScenes(state).length > before)
-      announce("新しい席がひらきました。場面帖で選べます。");
+      announce("新しい席がひらきました。場面フォルダで選べます。");
   };
   if (navigator.locks?.request) await navigator.locks.request(LOCK, run);
   else {
@@ -138,6 +138,7 @@ function go(name) {
   recordStamp = "";
   render();
   $("#main").focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: "instant" });
 }
 function showSettings() {
   const form = $("#settings-form");
@@ -166,6 +167,22 @@ function render() {
   const seconds = Math.max(0, Math.ceil(t.remainingMs / 1000));
   const mm = String(Math.floor(seconds / 60)).padStart(2, "0"),
     ss = String(seconds % 60).padStart(2, "0");
+  const statusLabel = readOnly
+    ? "操作停止中"
+    : { idle: "待機中", running: "進行中", paused: "一時停止" }[t.status];
+  $("#timer-status").textContent = statusLabel;
+  $("#taskbar-timer").textContent =
+    `${labels[t.mode]} ${mm}:${ss} · ${statusLabel}`;
+  $("#timer-progress").value = Math.max(
+    0,
+    Math.min(100, (1 - t.remainingMs / t.durationMs) * 100),
+  );
+  const clock = new Date();
+  $("#system-clock").textContent = clock.toLocaleTimeString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  $("#system-clock").dateTime = clock.toISOString();
   $("#timer-digits").innerHTML = `${mm}<span>:</span>${ss}`;
   $("#timer-digits").setAttribute(
     "aria-label",
@@ -211,7 +228,7 @@ function render() {
   }).format(new Date());
   const today = state.daily[dayKey(Date.now())] || 0;
   $("#today-total").innerHTML = `${prettyMinutes(today)}<small>分</small>`;
-  document.title = `${t.status === "running" ? `${mm}:${ss} ${labels[t.mode]} | ` : ""}Cafe Pomodoro — 喫茶室`;
+  document.title = `${t.status === "running" ? `${mm}:${ss} ${labels[t.mode]} | ` : ""}Cafe Pomodoro — 喫茶端末`;
   const scene = SCENES.find((s) => s.id === state.selectedScene) || SCENES[0];
   if (loadedImage !== scene.id) {
     loadedImage = scene.id;
@@ -345,8 +362,14 @@ $("#scene-image").addEventListener("error", () => {
   $("#scene-image").hidden = true;
 });
 document.addEventListener("click", (event) => {
+  if (event.target.closest("[data-home]")) {
+    event.preventDefault();
+    go("cafe");
+    return;
+  }
   const b = event.target.closest("button");
   if (!b) return;
+  if (b.hasAttribute("data-settings")) showSettings();
   if (b.dataset.view) go(b.dataset.view);
   if (b.dataset.close) $("#" + b.dataset.close).close();
   if (b.dataset.mode)
@@ -467,6 +490,12 @@ async function toggleSound(kind) {
     const b = $("#" + kind + "-toggle");
     b.setAttribute("aria-pressed", String(enabled));
     b.querySelector("small").textContent = enabled ? "ON" : "OFF";
+    $(".sound-panel").classList.toggle(
+      "is-playing",
+      $$(".sound-chip").some(
+        (button) => button.getAttribute("aria-pressed") === "true",
+      ),
+    );
   } catch {
     announce("音を再生できませんでした。もう一度お試しください。");
   }
