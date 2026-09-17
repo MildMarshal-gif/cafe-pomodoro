@@ -13,8 +13,9 @@ for (const match of js.matchAll(/\$\(['"]#([a-z-]+)['"]\)/g)) {
 for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
   const value = match[1];
   if (/^(data:|https?:)/.test(value)) continue;
+  const filename = value.split(/[?#]/, 1)[0];
   assert(
-    (await stat("dist/" + value)).isFile(),
+    (await stat("dist/" + filename)).isFile(),
     `missing local asset ${value}`,
   );
 }
